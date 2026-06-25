@@ -1,0 +1,762 @@
+/* ============================================================
+   STYLE.CSS — My Personal Diary
+   Japanese Light Design — Clean & Modern
+   ============================================================ */
+
+/* ---- 1. CSS Variables ---- */
+:root {
+    --bg:           #F6F6F4;
+    --surface:      #FFFFFF;
+    --surface-alt:  #F0F0ED;
+    --border:       #E3E3DC;
+    --border-soft:  #ECEAE6;
+    --text:         #1C1C1E;
+    --text-sub:     #6B6B6B;
+    --text-light:   #A0A09A;
+    --accent:       #2D7D9A;
+    --accent-dark:  #1F5F77;
+    --accent-light: #EEF6FA;
+    --success:      #4A8C5C;
+    --success-light:#EDF5F0;
+    --danger:       #B83232;
+    --danger-light: #FDEDED;
+    --warning:      #B87A32;
+    --sidebar-w:    230px;
+    --radius:       8px;
+    --radius-lg:    12px;
+    --shadow-sm:    0 1px 3px rgba(0,0,0,0.07);
+    --shadow-md:    0 4px 16px rgba(0,0,0,0.11);
+    --font:         'Noto Sans JP', system-ui, -apple-system, sans-serif;
+}
+
+/* ---- 2. Reset ---- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+}
+
+ul { list-style: none; }
+
+/* ---- 3. SIDEBAR ---- */
+.sidebar {
+    width: var(--sidebar-w);
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 100;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-header {
+    padding: 22px 20px 18px;
+    border-bottom: 1px solid var(--border-soft);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.logo {
+    font-size: 22px;
+    line-height: 1;
+}
+
+.app-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.3px;
+}
+
+.nav-list {
+    padding: 12px 10px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    color: var(--text-sub);
+    font-size: 13.5px;
+    font-weight: 500;
+    transition: background 0.15s, color 0.15s;
+    margin-bottom: 3px;
+    user-select: none;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+}
+
+.nav-item:hover {
+    background: var(--surface-alt);
+    color: var(--text);
+}
+
+.nav-item.active {
+    background: var(--accent-light);
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.nav-icon {
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.nav-text {
+    flex: 1;
+}
+
+.sidebar-footer {
+    padding: 14px 20px;
+    border-top: 1px solid var(--border-soft);
+    font-size: 11px;
+    color: var(--text-light);
+    letter-spacing: 0.3px;
+    flex-shrink: 0;
+}
+
+/* Mobile hamburger */
+.hamburger {
+    display: none;
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    z-index: 200;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-sm);
+    color: var(--text);
+    line-height: 1;
+}
+
+/* Overlay when sidebar open on mobile */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 90;
+}
+
+/* ---- 4. MAIN CONTENT ---- */
+.main-content {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    padding: 36px 40px;
+}
+
+/* ---- 5. PAGES (show / hide) ---- */
+.page { display: none; }
+
+.page.active {
+    display: block;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.page-header { margin-bottom: 28px; }
+
+.page-header h2 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.page-subtitle {
+    color: var(--text-sub);
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+/* ---- 6. CARDS ---- */
+.section-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-sm);
+}
+
+.section-title {
+    font-size: 14.5px;
+    font-weight: 600;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-soft);
+}
+
+.section-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-soft);
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.section-header-row .section-title {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.last-update-text {
+    font-size: 11.5px;
+    color: var(--text-light);
+}
+
+/* ---- 7. FORMS ---- */
+.form-group { margin-bottom: 16px; }
+
+.form-group label {
+    display: block;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--text-sub);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px 13px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-family: var(--font);
+    font-size: 14px;
+    color: var(--text);
+    background: var(--surface);
+    transition: border-color 0.15s, box-shadow 0.15s;
+    outline: none;
+}
+
+.input-field:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(45, 125, 154, 0.12);
+}
+
+.input-readonly {
+    width: 100%;
+    padding: 10px 13px;
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius);
+    font-family: var(--font);
+    font-size: 13.5px;
+    color: var(--text-sub);
+    background: var(--surface-alt);
+    cursor: default;
+}
+
+.textarea-field {
+    width: 100%;
+    padding: 10px 13px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-family: var(--font);
+    font-size: 14px;
+    color: var(--text);
+    background: var(--surface);
+    resize: vertical;
+    min-height: 100px;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    line-height: 1.7;
+}
+
+.textarea-field:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(45, 125, 154, 0.12);
+}
+
+.notebook-textarea {
+    font-family: 'Courier New', monospace;
+    background: #FEFEF8;
+    line-height: 1.9;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.input-small { width: auto; max-width: 190px; }
+
+.filter-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.filter-row label {
+    font-size: 13px;
+    color: var(--text-sub);
+    white-space: nowrap;
+}
+
+/* ---- 8. BUTTONS ---- */
+.btn-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 9px 20px;
+    border-radius: var(--radius);
+    font-family: var(--font);
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+    outline: none;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-primary { background: var(--accent); color: white; }
+.btn-primary:hover { background: var(--accent-dark); }
+.btn-primary:active { transform: scale(0.98); }
+
+.btn-secondary {
+    background: var(--surface-alt);
+    color: var(--text-sub);
+    border: 1px solid var(--border);
+}
+.btn-secondary:hover { background: var(--border); color: var(--text); }
+
+.btn-outline {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    font-size: 13px;
+    padding: 7px 14px;
+}
+.btn-outline:hover { background: var(--accent-light); }
+
+.btn-sm { padding: 6px 12px; font-size: 12px; }
+
+.btn-link {
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-family: var(--font);
+    font-size: inherit;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+.btn-delete {
+    background: var(--danger-light);
+    color: var(--danger);
+    border: none;
+    border-radius: var(--radius);
+    font-family: var(--font);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 5px 11px;
+    transition: background 0.15s;
+    white-space: nowrap;
+}
+.btn-delete:hover { background: #f5cccc; }
+
+.btn-paid {
+    background: var(--success-light);
+    color: var(--success);
+    border: none;
+    border-radius: var(--radius);
+    font-family: var(--font);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 5px 11px;
+}
+.btn-paid:hover { background: #c9e8d4; }
+
+.btn-mark-paid {
+    background: var(--accent-light);
+    color: var(--accent);
+    border: 1px solid rgba(45,125,154,0.2);
+    border-radius: var(--radius);
+    font-family: var(--font);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 5px 11px;
+}
+.btn-mark-paid:hover { background: #d5ecf5; }
+
+/* ---- 9. HOME DASHBOARD ---- */
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.summary-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    transition: box-shadow 0.15s, transform 0.15s;
+    box-shadow: var(--shadow-sm);
+}
+
+.summary-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.summary-icon { font-size: 26px; flex-shrink: 0; }
+.summary-number { font-size: 22px; font-weight: 700; color: var(--accent); line-height: 1; }
+.summary-label { font-size: 12px; color: var(--text-sub); margin-top: 3px; }
+
+/* ---- 10. JOURNAL ENTRIES ---- */
+.entry-card {
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 12px;
+    background: var(--bg);
+    border-left: 3px solid var(--accent);
+}
+.entry-card:last-child { margin-bottom: 0; }
+
+.entry-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.entry-datetime { font-size: 11.5px; color: var(--text-light); font-weight: 500; }
+.entry-title { font-size: 14.5px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+.entry-content { font-size: 13.5px; color: var(--text-sub); line-height: 1.75; white-space: pre-wrap; }
+
+/* ---- 11. EXPENSES ---- */
+.expense-summary-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.expense-total-box {
+    flex: 1;
+    min-width: 140px;
+    background: var(--accent-light);
+    border: 1px solid rgba(45, 125, 154, 0.18);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.total-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.total-amount { font-size: 26px; font-weight: 700; color: var(--accent-dark); line-height: 1; }
+
+.expense-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 14px;
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius);
+    margin-bottom: 8px;
+    background: var(--bg);
+    flex-wrap: wrap;
+}
+.expense-item:last-child { margin-bottom: 0; }
+
+.expense-amount-badge {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 8px 14px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent);
+    white-space: nowrap;
+    min-width: 85px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.expense-info { flex: 1; min-width: 120px; }
+.expense-category-text { font-size: 13.5px; font-weight: 600; color: var(--text); }
+.expense-purpose-text { font-size: 12.5px; color: var(--text-sub); margin-top: 1px; }
+.expense-date-text { font-size: 11.5px; color: var(--text-light); margin-top: 3px; }
+
+/* ---- 12. PAYMENTS ---- */
+.payment-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 10px;
+    transition: border-color 0.2s, background 0.2s;
+}
+.payment-card:last-child { margin-bottom: 0; }
+
+.payment-card.paid {
+    border-color: var(--success);
+    background: var(--success-light);
+}
+
+.payment-left { flex: 1; min-width: 160px; }
+.payment-name { font-size: 14.5px; font-weight: 600; color: var(--text); }
+.payment-due { font-size: 12px; color: var(--text-sub); margin-top: 3px; }
+.payment-last-paid { font-size: 11.5px; color: var(--success); font-weight: 600; margin-top: 4px; }
+.payment-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.payment-amount-text { font-size: 20px; font-weight: 700; color: var(--text); min-width: 70px; text-align: right; }
+
+/* ---- 13. NOTES ---- */
+.notes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+.note-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+    background: #FEFEF8;
+    border-top: 3px solid var(--warning);
+    display: flex;
+    flex-direction: column;
+}
+
+.note-card-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+
+.note-card-content {
+    font-size: 13px;
+    color: var(--text-sub);
+    line-height: 1.75;
+    white-space: pre-wrap;
+    flex: 1;
+    max-height: 130px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+}
+
+.note-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-soft);
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.note-saved-at { font-size: 11px; color: var(--text-light); }
+
+/* ---- 14. CALCULATOR ---- */
+.calc-wrapper { max-width: 360px; margin: 0 auto; }
+
+.calc-display {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 16px 14px;
+    text-align: right;
+    margin-bottom: 16px;
+}
+
+.calc-expression {
+    font-size: 12.5px;
+    color: var(--text-light);
+    min-height: 18px;
+    margin-bottom: 4px;
+    word-break: break-all;
+}
+
+.calc-result {
+    font-size: 38px;
+    font-weight: 700;
+    color: var(--text);
+    word-break: break-all;
+    line-height: 1.1;
+}
+
+.calc-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.calc-btn {
+    padding: 19px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    font-family: var(--font);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+    transition: background 0.1s, transform 0.1s;
+    outline: none;
+    line-height: 1;
+}
+
+.calc-btn:hover { background: var(--surface-alt); }
+.calc-btn:active { transform: scale(0.94); }
+.calc-btn.span-two { grid-column: span 2; }
+
+.calc-btn.btn-operator {
+    background: var(--accent-light);
+    color: var(--accent);
+    border-color: rgba(45,125,154,0.18);
+    font-weight: 600;
+}
+.calc-btn.btn-operator:hover { background: #dceef5; }
+
+.calc-btn.btn-danger {
+    background: var(--danger-light);
+    color: var(--danger);
+    border-color: rgba(184,50,50,0.18);
+}
+
+.calc-btn.btn-equals {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+    font-size: 22px;
+    font-weight: 700;
+}
+.calc-btn.btn-equals:hover { background: var(--accent-dark); }
+
+.calc-hint { font-size: 11.5px; color: var(--text-light); text-align: center; margin-top: 14px; }
+
+/* ---- 15. UTILITIES ---- */
+.empty-text { text-align: center; color: var(--text-light); font-size: 13.5px; padding: 30px 0; }
+
+.toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: #2C2C2E;
+    color: white;
+    padding: 12px 20px;
+    border-radius: var(--radius);
+    font-size: 13.5px;
+    font-weight: 500;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.25s, transform 0.25s;
+    pointer-events: none;
+    max-width: 300px;
+    box-shadow: var(--shadow-md);
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+.toast.success { background: var(--success); }
+.toast.error   { background: var(--danger); }
+
+/* ---- 16. RESPONSIVE MOBILE ---- */
+@media (max-width: 768px) {
+    .hamburger { display: flex; }
+
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); box-shadow: var(--shadow-md); }
+    .sidebar-overlay.show { display: block; }
+
+    .main-content { margin-left: 0; padding: 68px 16px 28px; }
+    .form-row { grid-template-columns: 1fr; }
+    .summary-grid { grid-template-columns: 1fr 1fr; }
+    .expense-summary-row { flex-direction: column; }
+    .notes-grid { grid-template-columns: 1fr; }
+    .calc-wrapper { max-width: 100%; }
+}
+
+/* ---- 17. PRINT / SAVE AS PDF ---- */
+#print-area { display: none; }
+
+@media print {
+    .sidebar, .hamburger, .sidebar-overlay, .main-content, .toast {
+        display: none !important;
+    }
+
+    #print-area {
+        display: block !important;
+        padding: 0;
+        font-family: Georgia, serif;
+        color: #111;
+        background: white;
+    }
+
+    @page { margin: 20mm 18mm; size: A4; }
+
+    .print-entry { page-break-inside: avoid; }
+    body { background: white !important; }
+}
