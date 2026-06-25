@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Diary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ 
+    <!-- Mobile hamburger button -->
+    <button class="hamburger" id="hamburger" onclick="openSidebar()">&#9776;</button>
+ 
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+ 
+        <div class="sidebar-header">
+            <span class="logo">&#128211;</span>
+            <span class="app-title">My Diary</span>
+        </div>
+ 
+        <ul class="nav-list">
+            <li class="nav-item active" data-page="home">
+                <span class="nav-icon">&#127968;</span>
+                <span class="nav-text">Home</span>
+            </li>
+            <li class="nav-item" data-page="journal">
+                <span class="nav-icon">&#128221;</span>
+                <span class="nav-text">Daily Journal</span>
+            </li>
+            <li class="nav-item" data-page="expenses">
+                <span class="nav-icon">&#128176;</span>
+                <span class="nav-text">Expenses</span>
+            </li>
+            <li class="nav-item" data-page="payments">
+                <span class="nav-icon">&#128197;</span>
+                <span class="nav-text">Monthly Payments</span>
+            </li>
+            <li class="nav-item" data-page="notes">
+                <span class="nav-icon">&#128221;</span>
+                <span class="nav-text">Notes</span>
+            </li>
+            <li class="nav-item" data-page="calculator">
+                <span class="nav-icon">&#129518;</span>
+                <span class="nav-text">Calculator</span>
+            </li>
+        </ul>
+ 
+        <div class="sidebar-footer">Personal Dashboard</div>
+    </nav>
+ 
