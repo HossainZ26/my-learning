@@ -8,18 +8,18 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
- 
+
     <!-- Mobile hamburger button -->
     <button class="hamburger" id="hamburger" onclick="openSidebar()">&#9776;</button>
- 
+
     <!-- Sidebar -->
     <nav class="sidebar" id="sidebar">
- 
+
         <div class="sidebar-header">
             <span class="logo">&#128211;</span>
             <span class="app-title">My Diary</span>
         </div>
- 
+
         <ul class="nav-list">
             <li class="nav-item active" data-page="home">
                 <span class="nav-icon">&#127968;</span>
@@ -46,7 +46,268 @@
                 <span class="nav-text">Calculator</span>
             </li>
         </ul>
- 
+
         <div class="sidebar-footer">Personal Dashboard</div>
     </nav>
- 
+
+    <!-- Overlay for mobile -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+    <!-- Main content area -->
+    <main class="main-content">
+
+        <!-- HOME PAGE -->
+        <section id="page-home" class="page active">
+            <div class="page-header">
+                <h2>Dashboard</h2>
+                <p class="page-subtitle" id="current-datetime">Loading...</p>
+            </div>
+            <div class="summary-grid">
+                <div class="summary-card" onclick="navigate('journal')">
+                    <span class="summary-icon">&#128221;</span>
+                    <div>
+                        <div class="summary-number" id="summary-journal">0</div>
+                        <div class="summary-label">Journal Entries</div>
+                    </div>
+                </div>
+                <div class="summary-card" onclick="navigate('expenses')">
+                    <span class="summary-icon">&#128176;</span>
+                    <div>
+                        <div class="summary-number" id="summary-expenses">&#2547;0</div>
+                        <div class="summary-label">Today's Expenses</div>
+                    </div>
+                </div>
+                <div class="summary-card" onclick="navigate('payments')">
+                    <span class="summary-icon">&#128197;</span>
+                    <div>
+                        <div class="summary-number" id="summary-payments">0</div>
+                        <div class="summary-label">Pending Payments</div>
+                    </div>
+                </div>
+                <div class="summary-card" onclick="navigate('notes')">
+                    <span class="summary-icon">&#128221;</span>
+                    <div>
+                        <div class="summary-number" id="summary-notes">0</div>
+                        <div class="summary-label">Saved Notes</div>
+                    </div>
+                </div>
+            </div>
+            <div class="section-card">
+                <h3 class="section-title">Recent Journal Entries</h3>
+                <div id="home-recent-journal">
+                    <p class="empty-text">No entries yet.
+                        <button class="btn-link" onclick="navigate('journal')">Write your first entry &#8594;</button>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- JOURNAL PAGE -->
+        <section id="page-journal" class="page">
+            <div class="page-header">
+                <h2>Daily Journal</h2>
+                <p class="page-subtitle">&#2470;&#2448;&#2472;&#2472;&#2381;&#2470;&#2495;&#2472; &#2439;&#2468;&#2495;&#2489;&#2494;&#2488; &#2482;&#2495;&#2454;&#2503; &#2480;&#2494;&#2454;&#2497;&#2472;</p>
+            </div>
+            <div class="section-card">
+                <h3 class="section-title">New Entry</h3>
+                <div class="form-group">
+                    <label>Date &amp; Time (Auto)</label>
+                    <input type="text" id="journal-datetime" class="input-readonly" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" id="journal-title" placeholder="What happened today?" class="input-field">
+                </div>
+                <div class="form-group">
+                    <label>Write About Your Day</label>
+                    <textarea id="journal-content" placeholder="Write here..." rows="5" class="textarea-field"></textarea>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="addJournalEntry()">Save Entry</button>
+                    <button class="btn btn-secondary" onclick="clearJournalForm()">Clear</button>
+                </div>
+            </div>
+            <div class="section-card">
+                <div class="section-header-row">
+                    <h3 class="section-title">All Entries</h3>
+                    <button class="btn btn-outline" onclick="printJournal()">&#128424; Print / PDF</button>
+                </div>
+                <div id="journal-list"><p class="empty-text">No entries yet.</p></div>
+            </div>
+        </section>
+
+        <!-- EXPENSES PAGE -->
+        <section id="page-expenses" class="page">
+            <div class="page-header">
+                <h2>Daily Expenses</h2>
+                <p class="page-subtitle">&#2454;&#2480;&#2458;&#2503;&#2480; &#2489;&#2495;&#2488;&#2494;&#2476; &#2480;&#2494;&#2454;&#2497;&#2472;</p>
+            </div>
+            <div class="section-card">
+                <h3 class="section-title">Add Expense</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="expense-date" class="input-field">
+                    </div>
+                    <div class="form-group">
+                        <label>Amount (&#2547;)</label>
+                        <input type="number" id="expense-amount" placeholder="0" class="input-field">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Category / Place</label>
+                    <input type="text" id="expense-category" placeholder="Food, Transport, Grocery..." class="input-field">
+                </div>
+                <div class="form-group">
+                    <label>Purpose / Details</label>
+                    <input type="text" id="expense-purpose" placeholder="What was it for?" class="input-field">
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="addExpense()">Add Expense</button>
+                    <button class="btn btn-secondary" onclick="clearExpenseForm()">Clear</button>
+                </div>
+            </div>
+            <div class="section-card">
+                <div class="expense-summary-row">
+                    <div class="expense-total-box">
+                        <span class="total-label">Today's Total</span>
+                        <span class="total-amount" id="today-total">&#2547;0</span>
+                    </div>
+                    <div class="expense-total-box">
+                        <span class="total-label">This Month</span>
+                        <span class="total-amount" id="month-total">&#2547;0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="section-card">
+                <div class="section-header-row">
+                    <h3 class="section-title">Expense History</h3>
+                    <button class="btn btn-outline" onclick="printExpenses()">&#128424; Print / PDF</button>
+                </div>
+                <div class="filter-row">
+                    <label>Filter by date:</label>
+                    <input type="date" id="expense-filter-date" onchange="filterExpenses()" class="input-field input-small">
+                    <button class="btn-link" onclick="clearExpenseFilter()">Clear filter</button>
+                </div>
+                <div id="expense-list"><p class="empty-text">No expenses yet.</p></div>
+            </div>
+        </section>
+
+        <!-- PAYMENTS PAGE -->
+        <section id="page-payments" class="page">
+            <div class="page-header">
+                <h2>Monthly Payments</h2>
+                <p class="page-subtitle">&#2478;&#2494;&#2488;&#2495;&#2453; &#2476;&#2495;&#2482;&#2503;&#2480; &#2489;&#2495;&#2488;&#2494;&#2476;</p>
+            </div>
+            <div class="section-card">
+                <h3 class="section-title">Add Payment Item</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Payment Name</label>
+                        <input type="text" id="payment-name" placeholder="House Rent, Internet..." class="input-field">
+                    </div>
+                    <div class="form-group">
+                        <label>Amount (&#2547;)</label>
+                        <input type="number" id="payment-amount" placeholder="0" class="input-field">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Due Day (1-31)</label>
+                        <input type="number" id="payment-due-day" placeholder="e.g. 5" min="1" max="31" class="input-field">
+                    </div>
+                    <div class="form-group">
+                        <label>Notes</label>
+                        <input type="text" id="payment-notes" placeholder="Extra info..." class="input-field">
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="addPayment()">Add Payment</button>
+                    <button class="btn btn-secondary" onclick="clearPaymentForm()">Clear</button>
+                </div>
+            </div>
+            <div class="section-card">
+                <div class="section-header-row">
+                    <h3 class="section-title">Payment List</h3>
+                    <div style="display:flex;gap:10px;align-items:center;">
+                        <span class="last-update-text" id="payments-last-update"></span>
+                        <button class="btn btn-outline btn-sm" onclick="resetAllPayments()">&#128260; New Month</button>
+                    </div>
+                </div>
+                <div id="payment-list"><p class="empty-text">No payments added yet.</p></div>
+            </div>
+        </section>
+
+        <!-- NOTES PAGE -->
+        <section id="page-notes" class="page">
+            <div class="page-header">
+                <h2>Notes</h2>
+                <p class="page-subtitle">&#2472;&#2507;&#2463;&#2476;&#2497;&#2453;&#2503;&#2480; &#2478;&#2468;&#2507; &#2482;&#2495;&#2454;&#2503; &#2480;&#2494;&#2454;&#2497;&#2472;</p>
+            </div>
+            <div class="section-card">
+                <h3 class="section-title">New Note</h3>
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" id="note-title" placeholder="Note title..." class="input-field">
+                </div>
+                <div class="form-group">
+                    <label>Content</label>
+                    <textarea id="note-content" placeholder="Write anything here..." rows="7" class="textarea-field notebook-textarea"></textarea>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="saveNote()">Save Note</button>
+                    <button class="btn btn-secondary" onclick="clearNoteForm()">Clear</button>
+                </div>
+            </div>
+            <div class="section-card">
+                <h3 class="section-title">Saved Notes</h3>
+                <div id="notes-list" class="notes-grid"><p class="empty-text">No notes yet.</p></div>
+            </div>
+        </section>
+
+        <!-- CALCULATOR PAGE -->
+        <section id="page-calculator" class="page">
+            <div class="page-header">
+                <h2>Calculator</h2>
+                <p class="page-subtitle">Keyboard shortcuts also work here</p>
+            </div>
+            <div class="section-card calc-wrapper">
+                <div class="calc-display">
+                    <div class="calc-expression" id="calc-expression">&nbsp;</div>
+                    <div class="calc-result" id="calc-result">0</div>
+                </div>
+                <div class="calc-buttons">
+                    <button class="calc-btn btn-danger span-two" onclick="calcClear()">C</button>
+                    <button class="calc-btn btn-danger" onclick="calcBackspace()">&#9003;</button>
+                    <button class="calc-btn btn-operator" onclick="calcInput('/')">&#247;</button>
+                    <button class="calc-btn" onclick="calcInput('7')">7</button>
+                    <button class="calc-btn" onclick="calcInput('8')">8</button>
+                    <button class="calc-btn" onclick="calcInput('9')">9</button>
+                    <button class="calc-btn btn-operator" onclick="calcInput('*')">&#215;</button>
+                    <button class="calc-btn" onclick="calcInput('4')">4</button>
+                    <button class="calc-btn" onclick="calcInput('5')">5</button>
+                    <button class="calc-btn" onclick="calcInput('6')">6</button>
+                    <button class="calc-btn btn-operator" onclick="calcInput('-')">&#8722;</button>
+                    <button class="calc-btn" onclick="calcInput('1')">1</button>
+                    <button class="calc-btn" onclick="calcInput('2')">2</button>
+                    <button class="calc-btn" onclick="calcInput('3')">3</button>
+                    <button class="calc-btn btn-operator" onclick="calcInput('+')">+</button>
+                    <button class="calc-btn span-two" onclick="calcInput('0')">0</button>
+                    <button class="calc-btn" onclick="calcInput('.')">.</button>
+                    <button class="calc-btn btn-equals" onclick="calcEquals()">=</button>
+                </div>
+                <p class="calc-hint">Tip: Type with keyboard while on this page.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Hidden print area -->
+    <div id="print-area"></div>
+
+    <!-- Toast popup message -->
+    <div id="toast" class="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
