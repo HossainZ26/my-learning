@@ -47,7 +47,11 @@
             </li>
         </ul>
 
-        <div class="sidebar-footer">Personal Dashboard</div>
+        <div class="sidebar-footer">
+            <button class="btn-footer" onclick="exportAllData()" title="Download backup">📥 Backup</button>
+            <button class="btn-footer" onclick="triggerImport()" title="Restore from backup">📤 Restore</button>
+        </div>
+        <input type="file" id="import-file" accept=".json" style="display:none;" onchange="importAllData(event)">
     </nav>
 
     <!-- Overlay for mobile -->
@@ -106,7 +110,7 @@
         <section id="page-journal" class="page">
             <div class="page-header">
                 <h2>Daily Journal</h2>
-                <p class="page-subtitle">&#2470;&#2448;&#2472;&#2472;&#2381;&#2470;&#2495;&#2472; &#2439;&#2468;&#2495;&#2489;&#2494;&#2488; &#2482;&#2495;&#2454;&#2503; &#2480;&#2494;&#2454;&#2497;&#2472;</p>
+                <p class="page-subtitle">দৈনন্দিন ইতিহাস লিখে রাখুন </p>
             </div>
             <div class="section-card">
                 <h3 class="section-title">New Entry</h3>

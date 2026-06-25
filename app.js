@@ -1019,6 +1019,88 @@ function escapeHtml(text) {
 
 
 // ============================================================
+// SECTION 13.5: DATA BACKUP & RESTORE
+// Export all data as JSON and import from backup
+// ============================================================
+
+/**
+ * exportAllData()
+ * Downloads all data as a JSON file that user can keep safe
+ */
+function exportAllData() {
+    var backup = {
+        version: 1,
+        exportedAt: new Date().toISOString(),
+        data: {
+            journal: localStorage.getItem('diary_journal'),
+            expenses: localStorage.getItem('diary_expenses'),
+            payments: localStorage.getItem('diary_payments'),
+            notes: localStorage.getItem('diary_notes')
+        }
+    };
+
+    var dataStr = JSON.stringify(backup, null, 2);
+    var blob = new Blob([dataStr], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var link = document.createElement('a');
+    link.href = url;
+    link.download = 'diary-backup-' + formatDate(new Date()) + '.json';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+
+    showToast('Backup downloaded! ✓', 'success');
+}
+
+/**
+ * triggerImport()
+ * Opens the file picker to select a backup JSON file
+ */
+function triggerImport() {
+    document.getElementById('import-file').click();
+}
+
+/**
+ * importAllData(event)
+ * Reads the selected JSON backup file and restores all data
+ */
+function importAllData(event) {
+    var file = event.target.files[0];
+    if (!file) return;
+
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            var backup = JSON.parse(e.target.result);
+
+            if (!backup.data) {
+                showToast('Invalid backup file format.', 'error');
+                return;
+            }
+
+            // Restore all data
+            if (backup.data.journal) localStorage.setItem('diary_journal', backup.data.journal);
+            if (backup.data.expenses) localStorage.setItem('diary_expenses', backup.data.expenses);
+            if (backup.data.payments) localStorage.setItem('diary_payments', backup.data.payments);
+            if (backup.data.notes) localStorage.setItem('diary_notes', backup.data.notes);
+
+            showToast('Data restored successfully! ✓', 'success');
+
+            // Refresh all pages
+            navigate('home');
+            updateDashboard();
+
+        } catch (error) {
+            showToast('Error reading backup file. Make sure it\'s a valid backup.', 'error');
+        }
+    };
+
+    reader.readAsText(file);
+}
+
+
+// ============================================================
 // SECTION 13: APP INITIALIZATION
 // This function runs once when the page first loads.
 // ============================================================

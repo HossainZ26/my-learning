@@ -600,11 +600,11 @@ ul { list-style: none; }
     line-height: 1.75;
     white-space: pre-wrap;
     flex: 1;
-    max-height: 130px;
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;
+    line-clamp: 6;
 }
 
 .note-card-footer {
